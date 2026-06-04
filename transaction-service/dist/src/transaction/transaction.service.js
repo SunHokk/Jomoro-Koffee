@@ -127,7 +127,7 @@ let TransactionService = class TransactionService {
         });
         return response.data;
     }
-    async checkout(userId) {
+    async checkout(userId, token) {
         const cart = await this.prisma.carts.findFirst({ where: { user_id: userId } });
         if (!cart)
             throw new common_1.BadRequestException('Cart is empty');
@@ -145,9 +145,7 @@ let TransactionService = class TransactionService {
                     quantity: item.quantity,
                 },
             });
-            await axios_1.default.post(`${PRODUCT_SERVICE_URL}/admin/products/${item.product_id}/reduce`, {
-                quantity: item.quantity,
-            });
+            await axios_1.default.post(`${PRODUCT_SERVICE_URL}/admin/products/${item.product_id}/reduce`, { quantity: item.quantity }, { headers: { Authorization: `Bearer ${token}` } });
         }
         await this.prisma.cart_items.deleteMany({ where: { cart_id: cart.id } });
         return { message: 'Checkout successful', order_id: order.id };

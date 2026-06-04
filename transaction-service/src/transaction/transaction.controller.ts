@@ -59,6 +59,7 @@ export class TransactionController {
   // Checkout endpoint
   @Post('orders')
   checkout(@Request() req) {
-    return this.transactionService.checkout(req.user.id);
-  }
+  const token = req.headers.authorization?.split(' ')[1];
+  return this.transactionService.checkout(req.user.id, token);
+}
 }

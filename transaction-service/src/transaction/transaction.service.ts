@@ -36,7 +36,6 @@ export class TransactionService {
 
   // Add to cart
   async addToCart(userId: number, dto: AddCartDto) {
-    // Cek produk ada dan stoknya
     const product = await axios.get(`${PRODUCT_SERVICE_URL}/products/${dto.product_id}`).catch(() => {
       throw new NotFoundException('Product not found');
     });
@@ -45,13 +44,11 @@ export class TransactionService {
       throw new BadRequestException('Quantity exceeds product stock');
     }
 
-    // Cek cart user
     let cart = await this.prisma.carts.findFirst({ where: { user_id: userId } });
     if (!cart) {
       cart = await this.prisma.carts.create({ data: { user_id: userId } });
     }
 
-    // Cek produk sudah ada di cart
     const existingItem = await this.prisma.cart_items.findFirst({
       where: { cart_id: cart.id, product_id: dto.product_id },
     });
@@ -153,17 +150,15 @@ export class TransactionService {
   }
 
   // Checkout
-  async checkout(userId: number) {
+  async checkout(userId: number, token: string) {
     const cart = await this.prisma.carts.findFirst({ where: { user_id: userId } });
     if (!cart) throw new BadRequestException('Cart is empty');
 
     const cartItems = await this.prisma.cart_items.findMany({ where: { cart_id: cart.id } });
     if (cartItems.length === 0) throw new BadRequestException('Cart is empty');
 
-    // Buat order
     const order = await this.prisma.orders.create({ data: { user_id: userId } });
 
-    // Buat order details dan update stok
     for (const item of cartItems) {
       const product = await axios.get(`${PRODUCT_SERVICE_URL}/products/${item.product_id}`);
 
@@ -176,13 +171,13 @@ export class TransactionService {
         },
       });
 
-      // Update stok via Product Service
-      await axios.post(`${PRODUCT_SERVICE_URL}/admin/products/${item.product_id}/reduce`, {
-        quantity: item.quantity,
-      });
+      await axios.post(
+        `${PRODUCT_SERVICE_URL}/admin/products/${item.product_id}/reduce`,
+        { quantity: item.quantity },
+        { headers: { Authorization: `Bearer ${token}` } },
+      );
     }
 
-    // Clear cart
     await this.prisma.cart_items.deleteMany({ where: { cart_id: cart.id } });
 
     return { message: 'Checkout successful', order_id: order.id };

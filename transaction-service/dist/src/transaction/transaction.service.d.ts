@@ -39,7 +39,7 @@ export declare class TransactionService {
         }[];
     }>;
     getProfile(userId: number, token: string): Promise<any>;
-    checkout(userId: number): Promise<{
+    checkout(userId: number, token: string): Promise<{
         message: string;
         order_id: number;
     }>;

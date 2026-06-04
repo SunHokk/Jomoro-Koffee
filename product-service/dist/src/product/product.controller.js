@@ -101,8 +101,7 @@ __decorate([
 ], ProductController.prototype, "updateProduct", null);
 __decorate([
     (0, swagger_1.ApiBearerAuth)(),
-    (0, common_1.UseGuards)(jwt_guard_1.JwtGuard, roles_guard_1.RolesGuard),
-    (0, roles_decorator_1.Roles)('ADMIN'),
+    (0, common_1.UseGuards)(jwt_guard_1.JwtGuard),
     (0, common_1.Post)('admin/products/:id/reduce'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),

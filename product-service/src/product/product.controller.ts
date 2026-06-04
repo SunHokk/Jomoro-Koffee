@@ -33,7 +33,6 @@ export class ProductController {
     return this.productService.getProductsByCategory(Number(categoryId));
   }
 
-  // Admin endpoints
   @ApiBearerAuth()
   @UseGuards(JwtGuard, RolesGuard)
   @Roles('ADMIN')
@@ -51,8 +50,7 @@ export class ProductController {
   }
 
   @ApiBearerAuth()
-  @UseGuards(JwtGuard, RolesGuard)
-  @Roles('ADMIN')
+  @UseGuards(JwtGuard)
   @Post('admin/products/:id/reduce')
   reduceStock(@Param('id') id: string, @Body() dto: ReduceStockDto) {
     return this.productService.reduceStock(Number(id), dto);

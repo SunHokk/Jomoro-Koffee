@@ -50,7 +50,8 @@ let TransactionController = class TransactionController {
         return this.transactionService.getProfile(req.user.id, token);
     }
     checkout(req) {
-        return this.transactionService.checkout(req.user.id);
+        const token = req.headers.authorization?.split(' ')[1];
+        return this.transactionService.checkout(req.user.id, token);
     }
 };
 exports.TransactionController = TransactionController;

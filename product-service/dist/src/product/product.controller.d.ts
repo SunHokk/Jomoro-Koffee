@@ -6,49 +6,49 @@ export declare class ProductController {
     constructor(productService: ProductService);
     getAllProducts(): Promise<({
         category: {
-            name: string;
             id: number;
+            name: string;
         };
     } & {
+        id: number;
         name: string;
         description: string;
         price: number;
         stock: number;
         image_url: string | null;
         category_id: number;
-        id: number;
     })[]>;
     getProductById(id: string): Promise<{
         category: {
-            name: string;
             id: number;
+            name: string;
         };
     } & {
+        id: number;
         name: string;
         description: string;
         price: number;
         stock: number;
         image_url: string | null;
         category_id: number;
-        id: number;
     }>;
     getAllCategories(): Promise<{
-        name: string;
         id: number;
+        name: string;
     }[]>;
     getProductsByCategory(categoryId: string): Promise<({
         category: {
-            name: string;
             id: number;
+            name: string;
         };
     } & {
+        id: number;
         name: string;
         description: string;
         price: number;
         stock: number;
         image_url: string | null;
         category_id: number;
-        id: number;
     })[]>;
     createProduct(dto: CreateProductDto): Promise<{
         message: string;
