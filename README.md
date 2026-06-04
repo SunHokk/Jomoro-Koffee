@@ -305,6 +305,7 @@ Setelah semua service berjalan, buka Swagger UI di browser:
 ## 👨‍💻 Developer
 
 **Nama**: Gilbert, Stawin, Nabil
-A
+
 **Mata Kuliah**: COSC6093 - Software Architecture  
+
 **Tahun**: 2026
