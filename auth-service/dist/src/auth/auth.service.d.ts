@@ -12,4 +12,10 @@ export declare class AuthService {
     login(dto: LoginDto): Promise<{
         access_token: string;
     }>;
+    getProfile(userId: number): Promise<{
+        first_name: string;
+        last_name: string;
+        email: string;
+        role: string;
+    }>;
 }

@@ -4,6 +4,7 @@ generator client {
 
 datasource db {
   provider = "mysql"
+  url      = env("DATABASE_URL")
 }
 
 model carts {
@@ -21,9 +22,9 @@ model cart_items {
 }
 
 model orders {
-  id            Int            @id @default(autoincrement())
+  id            Int             @id @default(autoincrement())
   user_id       Int
-  created_at    DateTime       @default(now())
+  created_at    DateTime        @default(now())
   order_details order_details[]
 }
 

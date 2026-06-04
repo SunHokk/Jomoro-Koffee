@@ -70,6 +70,20 @@ let AuthService = class AuthService {
         const token = this.jwtService.sign(payload);
         return { access_token: token };
     }
+    async getProfile(userId) {
+        const user = await this.prisma.users.findUnique({
+            where: { id: userId },
+        });
+        if (!user) {
+            throw new common_1.BadRequestException('User not found');
+        }
+        return {
+            first_name: user.first_name,
+            last_name: user.last_name,
+            email: user.email,
+            role: user.role,
+        };
+    }
 };
 exports.AuthService = AuthService;
 exports.AuthService = AuthService = __decorate([
