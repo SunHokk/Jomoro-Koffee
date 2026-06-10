@@ -64,8 +64,7 @@ export class ProductController {
   @ApiResponse({ status: 400, description: 'Quantity exceeds stock' })
   @ApiResponse({ status: 403, description: 'Access denied' })
   @ApiBearerAuth()
-  @UseGuards(JwtGuard, RolesGuard)
-  @Roles('ADMIN')
+  @UseGuards(JwtGuard)
   @Post('admin/products/:id/reduce')
   reduceStock(@Param('id') id: string, @Body() dto: ReduceStockDto) {
     return this.productService.reduceStock(Number(id), dto);
