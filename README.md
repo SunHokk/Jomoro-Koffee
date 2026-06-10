@@ -232,7 +232,7 @@ npm run start:dev
 | GET | /categories/:categoryId/products | Guest | Produk berdasarkan kategori |
 | POST | /admin/products | Admin | Tambah produk baru |
 | POST | /admin/products/:id/update | Admin | Update produk |
-| POST | /admin/products/:id/reduce | Admin | Kurangi stok produk |
+| POST | /admin/products/:id/reduce | Customer/Admin | Kurangi stok produk (internal) |
 | POST | /admin/products/:id/delete | Admin | Hapus produk |
 
 ### Transaction Service (`http://localhost:3003`)
