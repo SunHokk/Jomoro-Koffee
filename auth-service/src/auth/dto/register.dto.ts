@@ -17,6 +17,8 @@ export class RegisterDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsEmail({}, { message: 'Email must be a valid email address' })
+  @Matches(/^[^\s@]+@[^\s@]+\.(com|net|org|id)$/, {
+    message: 'Email domain must be .com, .net, .org, or .id' })
   email: string;
 
   @ApiProperty()
